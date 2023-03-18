@@ -1,33 +1,49 @@
 import { useState } from 'react'
 
+const Button = ({onClick, text}) => {
+  return(
+    <button onClick={onClick}>{text}</button>
+  )
+}
 
-const Feedback = (props) => {
+const Feedback = ({handlerEvent, texts}) => {
   return (
     <div>
       <h1>give feedback</h1>
-      <button onClick={props.handlerEvent[0]}>{props.text[0]}</button>
-      <button onClick={props.handlerEvent[1]}>{props.text[1]}</button>
-      <button onClick={props.handlerEvent[2]}>{props.text[2]}</button>
+      <Button onClick={handlerEvent[0]} text={texts[0]}/>
+      <Button onClick={handlerEvent[1]} text={texts[1]}/>
+      <Button onClick={handlerEvent[2]} text={texts[2]}/>
     </div>
   )
 }
 
-const Statistics = ({text, options}) => {
-  const [good, neutral, bad] = options
+const StatisticLine = ({text, value}) => {
+  return(
+    <tr>
+      <td>{text} {value}</td>
+    </tr>
+  )
+}
+
+const Statistics = ({texts, values}) => {
+  const [good, neutral, bad] = values
   const all = good + neutral + bad
   const averageScore = good/all - bad/all
   const positivePercentage = good*100/all
   if(all >  0){
     return (
-    
       <div>
         <h1>statistics</h1>
-        <p>{text[0]} {good}</p>
-        <p>{text[1]} {neutral}</p>
-        <p>{text[2]} {bad}</p>
-        <p>{text[3]} {all}</p>
-        <p>{text[4]} {averageScore}</p>
-        <p>{text[5]} {positivePercentage}</p>
+        <table>
+          <tbody>
+          <StatisticLine text={texts[0]} value={good}/>
+          <StatisticLine text={texts[1]} value={neutral}/>
+          <StatisticLine text={texts[2]} value={bad}/>
+          <StatisticLine text={texts[3]} value={all}/>
+          <StatisticLine text={texts[4]} value={averageScore}/>
+          <StatisticLine text={texts[5]} value={positivePercentage + " %"}/>
+        </tbody>
+      </table>
       </div>
     )
   }
@@ -52,8 +68,8 @@ const App = () => {
   ]
   return (
     <div>
-      <Feedback text={fieldText} handlerEvent={handleAddFeedback}></Feedback>
-      <Statistics text={fieldText} options={[good, neutral, bad]}></Statistics>
+      <Feedback texts={fieldText} handlerEvent={handleAddFeedback}/>
+      <Statistics texts={fieldText} values={[good, neutral, bad]}/>
     </div>
   )
 }
