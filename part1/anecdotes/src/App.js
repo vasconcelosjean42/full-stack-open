@@ -34,7 +34,6 @@ const App = () => {
     setPoints(copy)
     setLargest(copy.indexOf(Math.max(...copy)))
   }
-
   const handleRandomAnecdotes = () => {
     const randomValue = Math.floor(Math.random() * 8)
     setSelected(randomValue)
